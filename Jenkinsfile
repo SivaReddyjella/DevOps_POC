@@ -1,17 +1,7 @@
 pipeline {
     agent any
 
-    options {
-        skipDefaultCheckout()
-    }
   
-    stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the code from the Git repository
-                git 'https://github.com/SivaReddyjella/DevOps_POC.git'
-            }
-        }
  
         stage('Terraform Init') {
             steps {
