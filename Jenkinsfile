@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git 'https://github.com/SivaReddyjella/DevOps_POC.git'
-'
+
             }
         }
  
