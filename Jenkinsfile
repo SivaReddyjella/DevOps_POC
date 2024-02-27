@@ -1,47 +1,41 @@
 pipeline {
     agent any
+    
+    environment {
+        AWS_ACCESS_KEY_ID     = 'AKIAQHZUKXXJSZ6CJWX2'
+        AWS_SECRET_ACCESS_KEY = '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'
+        AWS_DEFAULT_REGION    = 'us-west-2'
+    }
 
-  
- 
+    stages {
+        stage('Checkout') {
+            steps {
+                git ' https://github.com/SivaReddyjella/DevOps_POC.git' // Update with your Git repository URL
+            }
+        }
+        
         stage('Terraform Init') {
             steps {
-                // Navigate to the Terraform directory and initialize
-                dir('TERRAFORM_POC') {
-                    script {
-                        sh 'terraform init'
-                    }
+                script {
+                    sh 'terraform init'
                 }
             }
         }
- 
+        
         stage('Terraform Plan') {
             steps {
-                // Navigate to the Terraform directory and perform plan
-                dir('TERRAFORM_POC') {
-                    script {
-                        sh 'terraform plan -out=tfplan'
-                    }
+                script {
+                    sh 'terraform plan'
                 }
             }
         }
- 
+        
         stage('Terraform Apply') {
             steps {
-                // Navigate to the Terraform directory and apply the changes
-                dir('TERRAFORM_POC') {
-                    script {
-                        sh 'terraform apply -auto-approve tfplan'
-                    }
+                script {
+                    sh 'terraform apply -auto-approve'
                 }
             }
-        }
-    }
- 
-    post {
-        always {
-            // Clean up workspace after job completion
-            cleanWs()
         }
     }
 }
-
