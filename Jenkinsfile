@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     // Change working directory to TERRAFORM_POC
-                    dir('TERRAFORM_POC/main.tf/provider.tf') {
+                    dir('TERRAFORM_POC') {
                         // Execute terraform plan and save the plan to tfplan file
                         sh 'terraform plan'
                     }
@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     // Change working directory to TERRAFORM_POC
-                    dir('TERRAFORM_POC/main.tf/provider.tf') {
+                    dir('TERRAFORM_POC') {
                         // Apply the changes using the plan file generated from terraform plan
                         sh 'terraform apply'
                     }
