@@ -1,0 +1,20 @@
+---
+- name: Install and Configure Apache HTTP Server
+  hosts: all
+  become: true
+  tasks:
+    - name: Update package repository
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install Apache HTTP Server
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start Apache service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
