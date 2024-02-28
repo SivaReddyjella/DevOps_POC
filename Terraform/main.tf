@@ -17,7 +17,7 @@ data "aws_ami" "amazon-linux" {
 resource "aws_instance" "dev_machine" {
   ami           = data.aws_ami.amazon-linux.id
   instance_type = "t2.micro"
-  key_name      = "siva"
+  key_name      = "reddy"
 
   tags = {
     Environment = "dev"
@@ -30,7 +30,7 @@ resource "aws_instance" "dev_machine" {
       host        = self.public_dns
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("siva.pem")
+      private_key = file("reddy.pem")
     }
   }
 
@@ -39,11 +39,11 @@ resource "aws_instance" "dev_machine" {
   }
 
   provisioner "local-exec" {
-    command = "chmod 600 ./siva.pem"
+    command = "chmod 600 ./reddy.pem"
   }
 
   provisioner "local-exec" {
-    command     = "ansible-playbook -i ${aws_instance.dev_machine.public_ip}, --private-key ./siva.pem nginx.yaml"
+    command     = "ansible-playbook -i ${aws_instance.dev_machine.public_ip}, --private-key ./reddy.pem nginx.yaml"
     working_dir = path.module
   }
 }
