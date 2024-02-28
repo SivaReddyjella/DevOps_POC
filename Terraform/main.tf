@@ -17,7 +17,7 @@ data "aws_ami" "amazon-linux" {
 resource "aws_instance" "dev_machine" {
   ami           = data.aws_ami.amazon-linux.id
   instance_type = "t2.micro"
-  key_name      = "terraform"
+  key_name      = "siva"
 
   tags = {
     Environment = "dev"
@@ -30,7 +30,7 @@ resource "aws_instance" "dev_machine" {
       host        = self.public_dns
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("terraform.pem")
+      private_key = file("siva.pem")
     }
   }
 
@@ -43,7 +43,7 @@ resource "aws_instance" "dev_machine" {
   }
 
   provisioner "local-exec" {
-    command     = "ansible-playbook -i ${aws_instance.dev_machine.public_ip}, --private-key ./terraform.pem nginx.yaml"
+    command     = "ansible-playbook -i ${aws_instance.dev_machine.public_ip}, --private-key ./siva.pem nginx.yaml"
     working_dir = path.module
   }
 }
