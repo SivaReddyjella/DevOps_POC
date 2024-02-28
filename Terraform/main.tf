@@ -39,7 +39,7 @@ resource "aws_instance" "dev_machine" {
   }
 
   provisioner "local-exec" {
-    command = "chmod 600 ./terraform.pem"
+    command = "chmod 600 ./siva.pem"
   }
 
   provisioner "local-exec" {
