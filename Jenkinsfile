@@ -19,7 +19,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 script {
-                    dir('Terraform') {
+                    dir('DevOps_POC/Terraform') {
                         sh 'terraform init'
                     }
                 }
