@@ -19,7 +19,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 script {
-                    dir('DevOps_POC/Terraform') {
+                    dir('Terraform') {
                         sh 'terraform init'
                     }
                 }
@@ -29,7 +29,7 @@ pipeline {
         stage('Terraform Apply/Destroy') {
             steps {
                 script {
-                    dir('DevOps_POC/Terraform') {
+                    dir('Terraform') {
                         sh """
                             export TF_VAR_name=${params.SERVER_NAME}
                             terraform init
