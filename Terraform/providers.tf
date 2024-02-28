@@ -11,7 +11,6 @@ terraform {
 provider "aws" {
   profile = "default"
   region  = "us-west-2"
-  export AWS_ACCESS_KEY_ID='AKIAQHZUKXXJZGQO2SOH'
-  export AWS_SECRET_ACCESS_KEY='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'
-
+  AWS_ACCESS_KEY_ID='AKIAQHZUKXXJZGQO2SOH'
+  AWS_SECRET_ACCESS_KEY='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'
 }
