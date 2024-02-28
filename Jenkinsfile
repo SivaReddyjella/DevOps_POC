@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/Gangulaprathapreddy/DevOps_Project.git']]])
+                    checkout([$class: 'GitSCM', branches: [[name: 'dev']], userRemoteConfigs: [[url: ' https://github.com/SivaReddyjella/DevOps_POC.git']]])
                 }
             }
         }
@@ -19,7 +19,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 script {
-                    dir('DevOps_Project_2/Terraform') {
+                    dir('DevOps_POC/Terraform') {
                         sh 'terraform init'
                     }
                 }
@@ -29,7 +29,7 @@ pipeline {
         stage('Terraform Apply/Destroy') {
             steps {
                 script {
-                    dir('DevOps_Project_2/Terraform') {
+                    dir('DevOps_POC/Terraform') {
                         sh """
                             export TF_VAR_name=${params.SERVER_NAME}
                             terraform init
