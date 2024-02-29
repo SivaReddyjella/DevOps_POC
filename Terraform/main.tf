@@ -18,7 +18,7 @@ resource "aws_instance" "dev_machine" {
   ami           = data.aws_ami.amazon-linux.id
   instance_type = "t2.micro"
   key_name      = "reddy"
-
+}
   tags = {
     Environment = "dev"
     Name        = "${var.name}-server"
@@ -46,7 +46,7 @@ resource "aws_instance" "dev_machine" {
     command     = "ansible-playbook -i ${aws_instance.dev_machine.public_ip}, --private-key ./reddy.pem nginx.yaml"
     working_dir = path.module
   }
-}
+
 
 output "public_ip" {
   value = aws_instance.dev_machine.public_ip
