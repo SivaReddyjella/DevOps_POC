@@ -46,6 +46,7 @@ resource "aws_instance" "dev_machine" {
     command     = "ansible-playbook -i ${aws_instance.dev_machine.public_ip}, --private-key ./reddy.pem nginx.yaml"
     working_dir = path.module
   }
+}
 
 
 output "public_ip" {
