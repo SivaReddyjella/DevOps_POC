@@ -33,15 +33,22 @@ pipeline {
                 script {
                     // Change to the Terraform directory
                     dir('DevOps_POC/Terraform') {
-                        // Set the Terraform variable for server name
-                        sh "terraform apply -auto-approve -var 'name=${params.SERVER_NAME}'" 
                         // Apply or destroy based on user input
                         if (params.TERRAFORM_ACTION == 'apply') {
-                            sh 'terraform apply -auto-approve'
+                            // Set the Terraform variable for server name and apply
+                            def applyCommand = "terraform apply -auto-approve -var 'name=${params.SERVER_NAME}'"
+                            def applyStatus = sh(script: applyCommand, returnStatus: true)
+                            if (applyStatus != 0) {
+                                error "Failed to apply Terraform configuration"
+                            }
                         } else if (params.TERRAFORM_ACTION == 'destroy') {
-                            sh 'terraform destroy -auto-approve'
+                            // Destroy with auto-approval
+                            def destroyStatus = sh(script: 'terraform destroy -auto-approve', returnStatus: true)
+                            if (destroyStatus != 0) {
+                                error "Failed to destroy Terraform resources"
+                            }
                         } else {
-                            echo 'Invalid action provided. Use "apply" or "destroy".'
+                            error "Invalid action provided. Use 'apply' or 'destroy'."
                         }
                     }
                 }
