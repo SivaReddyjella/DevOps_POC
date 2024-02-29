@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     dir('DevOps_POC/Terraform') {
-                        sh 'terraform init'
+                        sh 'terraform init -reconfigure'
                     }
                 }
             }
