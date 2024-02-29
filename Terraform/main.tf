@@ -18,7 +18,7 @@ resource "aws_instance" "dev_machine" {
   ami           = data.aws_ami.amazon-linux.id
   instance_type = "t2.micro"
   key_name      = "reddy"
-}
+
   tags = {
     Environment = "dev"
     Name        = "${var.name}-server"
