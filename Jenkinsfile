@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     // Change to the Terraform directory
-                    dir('DevOps_POC/Terraform') {
+                    dir('Terraform') {
                         // Apply or destroy based on user input
                         if (params.TERRAFORM_ACTION == 'apply') {
                             // Set the Terraform variable for server name and apply
