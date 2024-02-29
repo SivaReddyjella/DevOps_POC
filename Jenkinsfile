@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -11,7 +10,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    checkout([$class: 'GitSCM', branches: [[name: 'dev']], userRemoteConfigs: [[url: ' https://github.com/SivaReddyjella/DevOps_POC.git']]])
+                    // Checkout the repository
+                    checkout([$class: 'GitSCM', branches: [[name: 'dev']], userRemoteConfigs: [[url: 'https://github.com/SivaReddyjella/DevOps_POC.git']]])
                 }
             }
         }
@@ -19,8 +19,10 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 script {
+                    // Change to the Terraform directory
                     dir('DevOps_POC/Terraform') {
-                        sh 'terraform init -migrate-state'
+                        // Initialize Terraform with potential state migration
+                        sh 'terraform init -reconfigure'
                     }
                 }
             }
@@ -29,18 +31,18 @@ pipeline {
         stage('Terraform Apply/Destroy') {
             steps {
                 script {
-                    dir('Terraform') {
-                        sh """
-                            export TF_VAR_name=${params.SERVER_NAME}
-                            terraform init
-                            if [ "${params.TERRAFORM_ACTION}" = "apply" ]; then
-                                terraform apply -auto-approve
-                            elif [ "${params.TERRAFORM_ACTION}" = "destroy" ]; then
-                                terraform destroy -auto-approve
-                            else
-                                echo "Invalid action provided. Use 'apply' or 'destroy'."
-                            fi
-                        """
+                    // Change to the Terraform directory
+                    dir('DevOps_POC/Terraform') {
+                        // Set the Terraform variable for server name
+                        sh "terraform apply -auto-approve -var 'name=${params.SERVER_NAME}'" 
+                        // Apply or destroy based on user input
+                        if (params.TERRAFORM_ACTION == 'apply') {
+                            sh 'terraform apply -auto-approve'
+                        } else if (params.TERRAFORM_ACTION == 'destroy') {
+                            sh 'terraform destroy -auto-approve'
+                        } else {
+                            echo 'Invalid action provided. Use "apply" or "destroy".'
+                        }
                     }
                 }
             }
